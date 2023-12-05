@@ -24,6 +24,8 @@ void i2c_request_handler(){
 }
 
 void i2c_received_handler(int count){
-    Wire.readBytes(buffer,5);
-    Serial.println("%c,%f",buffer[0],&buffer[1]);
+    for(int i=0; i<count; i++)
+    {
+        buffer[i] = Wire.read();  
+    }
 }
