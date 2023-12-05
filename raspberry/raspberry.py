@@ -42,5 +42,5 @@ def main():
         except KeyboardInterrupt:
         	print("program was stopped manually")
 		except:
-            traceback.print_exc()		
+            traceback.print_exc()
 main()
