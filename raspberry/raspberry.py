@@ -1,4 +1,5 @@
 from smbus2 import SMBus, i2c_msg
+from time import sleep
 import struct
 import time
 import traceback
@@ -23,24 +24,26 @@ def readMsg():
 
 def writeMsg(cmd,data):
 	try:
-		opcode = struct.pack('<c <f',cmd,data) # Packs number as char and float
+		opcode = struct.pack('<if', cmd,data) # Packs number as char and float
 		# Creates a message object to write 4 bytes from SLAVE_ADDR
 		msg = i2c_msg.write(SLAVE_ADDR, opcode)
 		i2c.i2c_rdwr(msg)  # Performs write
 	except:
 		pass
 def main():
-    while True:
-        try:
-            cmd = input("Cmd to execute:")
-            cmd = chr(cmd)
-            data = input("Data:")
-            data = float(data)
-            writeMsg(cmd,data)
-            print("El mesaje es:")
-            print(readMsg())
-        except KeyboardInterrupt:
-        	print("program was stopped manually")
+	while True:
+		try:
+			cmd = input("Cmd to execute:")
+			cmd = int(cmd)
+			data = input("Data:")
+			data = float(data)
+			writeMsg(cmd,data)
+			sleep(1)
+			print("El mesaje es:")
+			print(readMsg())
+		except KeyboardInterrupt:
+			print("program was stopped manually")
+			break
 		except:
-            traceback.print_exc()		
+			traceback.print_exc()
 main()
