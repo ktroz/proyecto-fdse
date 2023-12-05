@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 #import smbus  # Para la comunicación I2C
 
 app = Flask(__name__)
-
+LOG_FILE = './temp.log'
+num=0
 # Dirección del dispositivo Arduino en el bus I2C
 #ARDUINO_ADDRESS = 0x12
 
@@ -11,7 +12,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    global num
+    num += 1
+    return render_template('index.html',para1=num)
 
 @app.route('/control', methods=['POST'])
 def control():
