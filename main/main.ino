@@ -1,6 +1,7 @@
 #include <Wire.h>
 #include "ventilador.h"
 #include "foco.h"
+#include "temperatura.h"
 
 // Constants
 #define I2C_SLAVE_ADDR 0x0A
@@ -10,8 +11,7 @@
 #define ZXPIN 2
 // Digital 3 is Pin 3 in UNO
 #define TRIAC 3
-#define VAREF 2.7273
-
+  
 // Global variables
 volatile bool flag = false;
 int pdelay = 0;
@@ -81,17 +81,8 @@ void i2c_received_handler(int count) {
   triacDelay = f;
 }
 
-float read_temp(void) {
-  // The actual temperature
-  int vplus = analogRead(0);
-  // The reference temperature value, i.e. 0 C
-  int vminus = analogRead(1);
-  // Calculate the difference. when V+ is smaller than V- we have negative temp
-  int vdiff = vplus - vminus;
-  float temp = vdiff * VAREF / 10.24f;
-  return temp;
-}
+
 
 void loop() {
-  pulseFan(&pwm, VENTILATOR_PIN);
+  changePwm(&pwm);
 }

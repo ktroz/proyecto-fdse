@@ -1,17 +1,8 @@
-int counter = 0;
-
-void pulseFan(int * pwm, int pinNumber);
+int FANPIN = 9;
+void changePwm(int * pwm);
 // PWM is the value between 0 and 100
-void pulseFan(int * pwm, int pinNumber){
-  while(counter < 255){
-    if(counter < *pwm){
-      digitalWrite(pinNumber,HIGH);
-    }else{
-      digitalWrite(pinNumber,LOW);
-    }
-    counter++;
-  }
-  counter = 0;
+void changePwm(int * pwm){
+  analogWrite(FANPIN,*pwm);
 }
 
 
