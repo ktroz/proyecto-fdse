@@ -2,7 +2,7 @@
 #include "ventilador.h"
 #include "foco.h"
 #include "temperatura.h"
-
+#include "pid.h"
 
 // Constants
 #define I2C_SLAVE_ADDR 0x0A
@@ -15,26 +15,21 @@
   
 // Global variables
 volatile bool flag = false;
-int pdelay = 0;
 int inc = 1;
 //Ventilator 0-255
-int pwm = 0;
+float fanPercentage = 0;
+float pumpPercentage = 0;
 //Lamp
 float triacDelay = 0;
-//Temperature sensor
-float temp = 0;
-float temp2 = 0;
 // I2C Data
 int cmd;
 float value;
 bool send = false;
 
+
 // Prototypes
 void i2c_received_handler(int count);
 void i2c_request_handler(int count);
-void turnLampOn(void);
-float read_temp(void);
-float read_avg_temp(int count);
 /**
 * Setup the Arduino
 */
@@ -88,5 +83,16 @@ void i2c_received_handler(int count) {
 
 
 void loop() {
-  //changePwm(&pwm);
+  if(cmd == 1){
+    changePumpPwm(100.0);
+  }else if (cmd == 2){
+    setTemp(value);
+  }else if (cmd == 3){
+    lampPower(value);
+  }else if(cmd == 4){
+    changePwm(value);
+  }else if(cmd == 5){
+    value = read_temp();
+  }
+  executePid();
 }
