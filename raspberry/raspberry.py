@@ -23,7 +23,7 @@ def readMsg():
 
 def writeMsg(cmd,data):
 	try:
-		opcode = struct.pack('<c <f',cmd,data) # Packs number as float
+		opcode = struct.pack('<c <f',cmd,data) # Packs number as char and float
 		# Creates a message object to write 4 bytes from SLAVE_ADDR
 		msg = i2c_msg.write(SLAVE_ADDR, opcode)
 		i2c.i2c_rdwr(msg)  # Performs write
