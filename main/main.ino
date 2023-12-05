@@ -2,7 +2,7 @@
 #include "ventilador.h"
 #include "foco.h"
 #include "temperatura.h"
-#include "i2c.h"
+
 
 // Constants
 #define I2C_SLAVE_ADDR 0x0A
@@ -25,7 +25,7 @@ float triacDelay = 0;
 float temp = 0;
 float temp2 = 0;
 // I2C Data
-char cmd;
+int cmd;
 float value;
 bool send = false;
 
@@ -76,18 +76,13 @@ void i2c_request_handler() {
 * Data is stored in local variable power.
 */
 void i2c_received_handler(int count) {
-  cmd = (char)Wire.read();
   byte *fp;
-  if (count != 4) return;
-  fp = (byte *)&value;
-  for (byte i = 0; i < count; ++i)
+  fp = (byte *)&cmd;
+  for (byte i = 0; i < 4; ++i)
     fp[i] = (byte)Wire.read();
-  if (cmd == 'a'){
-    value = value+1;
-  }
-  else if (cmd == 'b'){
-    value = value+2;
-  }
+  fp = (byte *)&value;
+  for (byte i = 0; i < 4; ++i)
+    fp[i] = (byte)Wire.read();
 }
 
 
