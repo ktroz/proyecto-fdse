@@ -90,6 +90,8 @@ void loop() {
   }else if (cmd == 3){
     lampPower(value);
   }else if(cmd == 4){
+    changePwm(value);
+  }else if(cmd == 5){
     value = read_temp();
   }
   executePid();
