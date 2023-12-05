@@ -83,12 +83,6 @@ void i2c_received_handler(int count) {
   fp = (byte *)&value;
   for (byte i = 0; i < 4; ++i)
     fp[i] = (byte)Wire.read();
-  if (cmd == 1){
-    value = value+10;
-  }
-  else if (cmd == 2){
-    value = value+144;
-  }
 }
 
 
