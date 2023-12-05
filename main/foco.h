@@ -37,7 +37,7 @@ void zxhandle(){
 	digitalWrite(TRIAC, LOW);
 	digitalWrite(13, LOW);
 
-	delayMicroseconds(3000);
+	delayMicroseconds(triacDelay);
 
 	if(triacDelay > 0) turnLampOn();
 }

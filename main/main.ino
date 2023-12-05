@@ -15,10 +15,10 @@
   
 // Global variables
 volatile bool flag = false;
-int pdelay = 0;
 int inc = 1;
 //Ventilator 0-255
-int pwm = 0;
+float fanPercentage = 0;
+float pumpPercentage = 0;
 //Lamp
 float triacDelay = 0;
 // I2C Data
@@ -83,5 +83,14 @@ void i2c_received_handler(int count) {
 
 
 void loop() {
-  //lampPower(40);
+  if(cmd == 1){
+    changePumpPwm(100.0);
+  }else if (cmd == 2){
+    setTemp(value);
+  }else if (cmd == 3){
+    lampPower(value);
+  }else if(cmd == 4){
+    value = read_temp();
+  }
+  executePid();
 }

@@ -17,6 +17,9 @@ void setupPID(int p){
     PIN = p;
     time = millis();
 }
+void setTemp(float desTemp){
+  desiredTemp = desTemp;
+}
 void executePid(){   
     temp = read_temp();  
     //Proportional
@@ -24,16 +27,22 @@ void executePid(){
     PID_p = kp * tempError;
 
     //Calculate the integral part in +-3
-    if(-1 < tempError && tempError < 1)
+    if(-3 < tempError && tempError < 3)
     {
       PID_i = PID_i + (ki * tempError);
     }
     //We calculate the speed change with derivative part
     previousTime = time;
+    time = millis();
+    timePassed = (time-previousTime)/1000;
     //Calculating derivative part
     PID_d = kd*((tempError-tempPreviousError)/timePassed);
     PID_total = PID_d + PID_p + PID_i;
-
+    if(PID_total < 0)
+    {    PID_total = 0;    }
+    if(PID_total > 255)  
+    {    PID_total = 255;  }
+    lampPower((int)(PID_total*100/255));
 
     tempPreviousError = tempError;
     
