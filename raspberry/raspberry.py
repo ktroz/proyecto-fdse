@@ -39,6 +39,8 @@ def main():
             writeMsg(cmd,data)
             print("El mesaje es:")
             print(readMsg())
-        except:
-            traceback.print_exc()
+        except KeyboardInterrupt:
+        	print("program was stopped manually")
+		except:
+            traceback.print_exc()		
 main()
