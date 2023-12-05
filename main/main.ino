@@ -2,7 +2,7 @@
 #include "ventilador.h"
 #include "foco.h"
 #include "temperatura.h"
-
+#include "pid.h"
 
 // Constants
 #define I2C_SLAVE_ADDR 0x0A
@@ -21,20 +21,15 @@ int inc = 1;
 int pwm = 0;
 //Lamp
 float triacDelay = 0;
-//Temperature sensor
-float temp = 0;
-float temp2 = 0;
 // I2C Data
 int cmd;
 float value;
 bool send = false;
 
+
 // Prototypes
 void i2c_received_handler(int count);
 void i2c_request_handler(int count);
-void turnLampOn(void);
-float read_temp(void);
-float read_avg_temp(int count);
 /**
 * Setup the Arduino
 */
@@ -88,5 +83,5 @@ void i2c_received_handler(int count) {
 
 
 void loop() {
-  //changePwm(&pwm);
+  //lampPower(40);
 }

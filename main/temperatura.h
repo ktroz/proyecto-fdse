@@ -3,9 +3,6 @@
 int vdiff1;
 int vdiff2;
 
-
-float read_temp(void);
-
 float read_temp(void) {
   // Temperature of the first LM35
   int vplus1 = analogRead(0);
